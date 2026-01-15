@@ -1,14 +1,34 @@
-import Image from "next/image";
-import Link from "next/link";
+'use client'
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 
-export default function Home() {
+export default function LoginPage() {
+  const [email, setEmail] = useState('')
+  const router = useRouter()
+
+  const handleLogin = () => {
+    if (email !== 'admin') return alert('Enter email')
+    localStorage.setItem('user', email)
+    router.push('/dashboard')
+  }
+
   return (
-    <div className="text-center space-y-4">
-      <h1 className="text-3xl font-bold underline ">Users Directory</h1>
-      <p className="text-gray-600"> Built with Next.js & Tailwind CSS</p>
-      <Link href="/users"
-      className="inline-block bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-      >View Users</Link>
+    <div className="flex h-screen items-center justify-center">
+      <div className="bg-gray-500 p-6 rounded shadow w-80">
+        <h1 className="text-xl font-bold mb-4">Login</h1>
+        <input
+          type="email"
+          placeholder="Email"
+          className="border p-2 w-full mb-4"
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <button
+          onClick={handleLogin}
+          className="bg-blue-600 text-white w-full py-2 rounded cursor-pointer"
+        >
+          Login
+        </button>
+      </div>
     </div>
-  );
+  )
 }
